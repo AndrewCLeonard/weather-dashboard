@@ -1,2 +1,2 @@
 # weather-dashboard
-Weather Report
+Demonstration of ability to use server-side APIs
