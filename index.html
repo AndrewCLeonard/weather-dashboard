@@ -17,17 +17,29 @@
 	<body>
 		<!-- Header -->
 		<header>
-			<a
-				title="Rhonda Guenther, CC BY-SA 4.0 &lt;https://creativecommons.org/licenses/by-sa/4.0&gt;, via Wikimedia Commons"
-				href="https://commons.wikimedia.org/wiki/File:Sunny_Day_on_the_Souris_River.jpg"
-				><img
-					class="header-image"
-					width="auto"
-					alt="Sunny Day on the Souris River"
-					src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Sunny_Day_on_the_Souris_River.jpg/4096px-Sunny_Day_on_the_Souris_River.jpg"
-			/></a>
-			<div class="header-text"><h1 class="display-1">Weather Report</h1></div>
+			<div class="weather-header"><h1 class="display-1">Weather Report</h1></div>
 		</header>
+
+		<!-- CONTENT -->
+		<!-- outmost container -->
+		<main class="container-fluid">
+			<!-- outmost row -->
+			<div class="row">
+                <!-- city search -->
+				<div class="col-md-3 bg-warning">Level 1: .col-md-3</div>
+                <!-- div for current weather and forecast -->
+				<div class="col-md-9 bg-success">
+					<!-- current weather data -->
+					<div class="row">
+						<div class="col-8 col-md-6">Level 2: .col-8 .col-md-6</div>
+					</div>
+					<!-- forecast data -->
+					<div class="row">
+						<div class="col-4 col-md-6 bg-secondary">Level 2: .col-4 .col-md-6</div>
+					</div>
+				</div>
+			</div>
+		</main>
 		<!-- SCRIPTS -->
 
 		<!-- Commenting out popper library for now, but leaving it here in case I decide to get fancy. -->

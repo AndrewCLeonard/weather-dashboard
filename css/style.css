@@ -1,12 +1,22 @@
-.header-image {
-	width: 100%;
-	height: 100px;
-	object-fit: cover;
-	object-position: 80% 10%;
+.weather-header {
+	background-image: url("../assets/Cumulus_clouds_in_fair_weather.jpeg");
+	color: white;
 }
 
-.header-text {
-	position: absolute;
-	top: 0px;
-	left: 8px;
+.header-image {
+	/* width: 100%; */
+	/* height: 100px; */
+	/* object-fit: cover; */
+}
+
+.cities-div {
+	background-color: gray;
+}
+
+.current-weather-div {
+	background-color: red;
+}
+
+.forecast-div {
+	background-color: darkgreen;
 }
