@@ -1,0 +1,23 @@
+{
+  "name": "weather-dashboard",
+  "version": "1.0.0",
+  "description": "Demonstration of ability to use server-side APIs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndrewCLeonard/weather-dashboard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndrewCLeonard/weather-dashboard/issues"
+  },
+  "homepage": "https://github.com/AndrewCLeonard/weather-dashboard#readme",
+  "dependencies": {
+    "bootstrap": "^5.2.0"
+  }
+}
