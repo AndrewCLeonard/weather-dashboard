@@ -26,6 +26,15 @@ Demonstration of ability to use server-side APIs
 
 ![mockup image](./assets/mockup.png "Bootstrapilicious!")
 
+## Explanation
+
+| Dependency                                                                   | Type | Explanation                                                                                                                                                                                                        |
+| ---------------------------------------------------------------------------- | ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [OpenWeatherMap Geocoding API](https://openweathermap.org/api/geocoding-api) | API  | Need to convert city names to geographical coordinates of latitude and longitude. <br> <br> Given a search for "London"<ol><li>finds cities named "London" around the world</li><li>Presents user with buttons of the different countries to click</li><li>when one is selected, the weather appears</li></ol> |
+
+## Dependencies
+
 ## Backlog
 
 -   The header's image is responsive, but it changes because of `object-fit` when resized.
+-   Improve the fit of five-day forecast cards

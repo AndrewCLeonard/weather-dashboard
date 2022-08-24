@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/AndrewCLeonard/weather-dashboard#readme",
   "dependencies": {
-    "bootstrap": "^5.2.0"
+    "bootstrap": "^5.2.0",
+    "dotenv": "^16.0.1"
   }
 }
