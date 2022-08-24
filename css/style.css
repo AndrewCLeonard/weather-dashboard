@@ -20,3 +20,7 @@
 .forecast-div {
 	background-color: darkgreen;
 }
+
+.current-weather-text {
+	max-width: 200px;
+}
