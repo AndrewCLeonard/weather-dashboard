@@ -25,10 +25,29 @@
 		<main class="container-fluid">
 			<!-- outmost row -->
 			<div class="row">
-				<!-- city search -->
+				<!-- CITY SEARCH START-->
 				<div class="col-md-4">
-					<div><h2>Search for a City:</h2></div>
+					<!-- city search box -->
+					<form action="" class="city-search-form">
+						<label for="citySearch"><h2>Search for a City:</h2></label>
+						<input type="text" name="citySearch" id="citySearch" required minlength="2" />
+						<input type="button" id="formBtn" value="Submit" />
+						<p id="empty-search"></p>
+						<div id="searchInstructions">
+							<p class="instructions">Instructions:</p>
+							<ul class="instructions">
+								<li>Search for a city by name (example: San Jose) to return a list.</li>
+								<li>Search for specific city by including its state (full names such as "California" or "Buenos Aires") and/or country with the two-letter code</em> by using commas (example: San Jose, AR)
+								</li>
+							</ul>
+						</div>
+						<!-- Search instructions -->
+					</form>
+					<!-- city search history -->
+					<div class="search-history" id="searchHistory"></div>
 				</div>
+				<!-- CITY SEARCH END -->
+
 				<!-- div for current weather and forecast -->
 				<div class="col-md-8">
 					<!-- current weather data -->

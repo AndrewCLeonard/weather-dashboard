@@ -24,3 +24,15 @@
 .current-weather-text {
 	max-width: 200px;
 }
+
+/** 
+* City Search Section
+*/
+
+/* text formatting for span used in case of an empty search */
+#empty-search {
+	color: red;
+}
+
+.city-search-form {
+}

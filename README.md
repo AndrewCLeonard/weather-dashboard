@@ -42,5 +42,6 @@ Demonstration of ability to use server-side APIs
 
 ### Medium Priority
 
+-   `<input type="submit">` vs. using a button. I'm not sending it to a server yet, do I change it from button to submit once I'm ready to construct the API requests?
 -   The header's image is responsive, but it changes because of `object-fit` when resized.
 -   Improve the fit of five-day forecast cards
