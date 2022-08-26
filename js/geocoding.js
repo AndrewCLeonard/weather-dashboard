@@ -1,4 +1,4 @@
-import openWeatherKey from "./keys";
+import openWeatherKey from "./keys.js";
 
 const textSearchEl = document.getElementById("citySearch");
 const formBtnEl = document.getElementById("formBtn");
@@ -19,8 +19,7 @@ function runGeoCodingAPI(citySearched) {
 	fetch(apiURL) //
 		.then(function (response) {
 			if (response.ok) {
-				console.log(response);
-				console.log(response.json());
+				console.table(response.json());
 			}
 		});
 }
