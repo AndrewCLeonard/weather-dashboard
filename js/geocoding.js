@@ -36,11 +36,33 @@ function runGeoCodingAPI(citySearched) {
 	// })
 }
 
-fetch("testData.json") //
+const cityList = document.querySelector("ol");
+
+fetch("./js/testData.json") //
 	.then((response) => {
 		if (!response.ok) {
 			throw new Error(`HTTP error, status = ${response.status}`);
 		}
+		return response.json();
+	})
+	.then((data) => {
+		for (const city of data) {
+			const listItem = document.createElement("li");
+
+			const nameElement = document.createElement("strong");
+			nameElement.textContent = city.lat;
+
+			const countryElement = document.createElement("strong");
+			countryElement.textContent = data.country;
+
+			listItem.append(nameElement, countryElement);
+			cityList.appendChild(listItem);
+		}
+	})
+	.catch((error) => {
+		const p = document.createElement("p");
+		p.appendChild(document.createTextNode(`Error: ${error.message}`));
+		document.body.insertBefore(p, cityList);
 	});
 
 // TO-DO
