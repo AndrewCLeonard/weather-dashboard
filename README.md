@@ -34,6 +34,13 @@ Demonstration of ability to use server-side APIs
 
 ## Dependencies
 
+### Google Maps API
+
+#### [Place Autocomplete](https://developers.google.com/maps/documentation/javascript/place-autocomplete)
+
+
+### OpenWeather API
+
 ## Backlog
 
 ### High Priority

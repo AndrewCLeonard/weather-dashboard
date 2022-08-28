@@ -1,6 +1,6 @@
 import apiKeys from "./keys.js";
 
-const textSearchEl = document.getElementById("citySearch");
+const textSearchEl = document.getElementById("autocomplete");
 const formBtnEl = document.getElementById("formBtn");
 // container where search result buttons appear and for subsequent weather forecast data
 const weatherReportContainerEl = document.getElementById("weatherReportContainerEl");
@@ -21,12 +21,19 @@ function getTextValue(e) {
 const unorderedListEl = document.createElement("ul");
 unorderedListEl.classList.add("returned-cities-list");
 
-// 
-let weatherIcon, countryName, cityName;
+// for updating the DOM using fetch()
+let weatherIcon, countryName;
+
+// ids to insert text
+const currentTempEl = document.getElementById("currentTemp");
+const currentWindEl = document.getElementById("currentWind");
+const currentHumidityEl = document.getElementById("currentHumidity");
+const currentUVIndexEl = document.getElementById("currentUVIndex");
+const currentCityName = document.getElementById("currentCityName");
 
 function runGeoCodingAPI(citySearched) {
 	console.log("===== runGeoCodingAPI =====");
-	const apiURL = `http://api.openweathermap.org/geo/1.0/direct?q=${citySearched}&limit=5&appid=${apiKeys.openWeatherKey}`;
+	const apiURL = `https://api.openweathermap.org/geo/1.0/direct?q=${citySearched}&limit=5&appid=${apiKeys.openWeatherKey}`;
 	fetch(apiURL) //
 		.then((response) => {
 			// handle bad responses
@@ -68,6 +75,7 @@ function runGeoCodingAPI(citySearched) {
 			document.body.insertBefore(p, listItemEl);
 		});
 }
+let currentCityNameText;
 
 function callCurrentWeatherData(lat, lon) {
 	console.log("====== callCurrentWeatherData() ======");
@@ -95,7 +103,13 @@ function callCurrentWeatherData(lat, lon) {
 			console.log(value.weather[0].icon);
 			weatherIcon = value.weather[0].icon;
 			console.table(value.main.temp);
+			currentCityNameText = value.name;
 		});
+	currentCityName.innerText = currentCityNameText;
+	currentTempEl.innerText = value.main.temp;
+	currentWindEl.innerText = value.wind.speed;
+	currentHumidityEl.innerText = value.main.humidity;
+	currentUVIndexEl.innerText = "???";
 }
 
 /**
@@ -112,6 +126,72 @@ function cityChosen(e) {
 	callCurrentWeatherData(lat, lon);
 }
 
+/**
+ * initMap() doesn't do anything yet
+ */
+function initMap() {
+	const CONFIGURATION = {
+		ctaTitle: "Checkout",
+		mapOptions: {
+			center: { lat: 37.4221, lng: -122.0841 },
+			fullscreenControl: true,
+			mapTypeControl: false,
+			streetViewControl: true,
+			zoom: 11,
+			zoomControl: true,
+			maxZoom: 22,
+			mapId: "",
+		},
+		mapsApiKey: "AIzaSyCmI3Q6AABGZ9ZbnD-TbXDEHKNnSlKXF6Q",
+		capabilities: { addressAutocompleteControl: true, mapDisplayControl: false, ctaControl: false },
+	};
+	const componentForm = ["location", "locality", "administrative_area_level_1", "country", "postal_code"];
+
+	const getFormInputElement = (component) => document.getElementById(component + "-input");
+	const autocompleteInput = getFormInputElement("location");
+	const autocomplete = new google.maps.places.Autocomplete(autocompleteInput, {
+		fields: ["address_components", "geometry", "name"],
+		types: ["address"],
+	});
+	autocomplete.addListener("place_changed", function () {
+		const place = autocomplete.getPlace();
+		if (!place.geometry) {
+			// User entered the name of a Place that was not suggested and
+			// pressed the Enter key, or the Place Details request failed.
+			window.alert("No details available for input: '" + place.name + "'");
+			return;
+		}
+		fillInAddress(place);
+	});
+
+	function fillInAddress(place) {
+		// optional parameter
+		const addressNameFormat = {
+			street_number: "short_name",
+			route: "long_name",
+			locality: "long_name",
+			administrative_area_level_1: "short_name",
+			country: "long_name",
+			postal_code: "short_name",
+		};
+		const getAddressComp = function (type) {
+			for (const component of place.address_components) {
+				if (component.types[0] === type) {
+					return component[addressNameFormat[type]];
+				}
+			}
+			return "";
+		};
+		getFormInputElement("location").value = getAddressComp("street_number") + " " + getAddressComp("route");
+		for (const component of componentForm) {
+			// Location field is handled separately above as it has different logic.
+			if (component !== "location") {
+				getFormInputElement(component).value = getAddressComp(component);
+			}
+		}
+	}
+}
+
 // TO-DO
 function alertMessage() {}
 
@@ -120,176 +200,3 @@ formBtnEl.addEventListener("click", getTextValue, false);
 
 // event listener for city results buttons
 weatherReportContainerEl.addEventListener("click", cityChosen, false);
-
-const weatherDataHTMLEl = `
-				<div id="weatherReportContainerEl" class="col-md-8">
-					<!-- current weather data -->
-					<div class="row">
-						<!-- current weather container -->
-						<article>
-							<div class="container current-weather border border-dark">
-								<div class="row"><h2>${value.name} http://openweathermap.org/img/wn/${weatherIcon}@2x.png</h2></div>
-								<div class="row">
-									<div class="col current-weather-text">
-										<p class="fs-3">Temperature:</p>
-									</div>
-									<div class="col-6">
-										<p class="fs-3">68 degrees</p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col current-weather-text">
-										<p class="fs-3">Wind:</p>
-									</div>
-									<div class="col">
-										<p class="fs-3">5.57 mph</p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col current-weather-text">
-										<p class="fs-3">Humidity:</p>
-									</div>
-									<div class="col current-weather-text">
-										<p class="fs-3">40%</p>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col current-weather-text">
-										<p class="fs-3">UV Index:</p>
-									</div>
-									<div class="col">
-										<p class="fs-3">12</p>
-									</div>
-								</div>
-							</div>
-						</article>
-						<!-- current weather container END -->
-					</div>
-
-					<!-- forecast data container -->
-					<div class="container">
-						<h2>Five-Day Forecast:</h2>
-
-						<!-- forecast card container -->
-						<div class="container">
-							<div class="row">
-								<div class="col-lg-auto">
-									<div class="card">
-										<div class="card-body">
-											<p class="card-title fs-5">09/01/2022</p>
-											<table class="table table-borderless">
-												<tbody>
-													<tr>
-														<td>Temp:</td>
-														<td>48 degrees</td>
-													</tr>
-													<tr>
-														<td>Wind</td>
-														<td>3.39 mph</td>
-													</tr>
-													<tr>
-														<td>Humidity</td>
-														<td>24%</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-auto">
-									<div class="card">
-										<div class="card-body">
-											<p class="card-title fs-5">09/01/2022</p>
-											<table class="table table-borderless">
-												<tbody>
-													<tr>
-														<td>Temp:</td>
-														<td>48 degrees</td>
-													</tr>
-													<tr>
-														<td>Wind</td>
-														<td>3.39 mph</td>
-													</tr>
-													<tr>
-														<td>Humidity</td>
-														<td>24%</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-auto">
-									<div class="card">
-										<div class="card-body">
-											<p class="card-title fs-5">09/01/2022</p>
-											<table class="table table-borderless">
-												<tbody>
-													<tr>
-														<td>Temp:</td>
-														<td>48 degrees</td>
-													</tr>
-													<tr>
-														<td>Wind</td>
-														<td>3.39 mph</td>
-													</tr>
-													<tr>
-														<td>Humidity</td>
-														<td>24%</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-auto">
-									<div class="card">
-										<div class="card-body">
-											<p class="card-title fs-5">09/01/2022</p>
-											<table class="table table-borderless">
-												<tbody>
-													<tr>
-														<td>Temp:</td>
-														<td>48 degrees</td>
-													</tr>
-													<tr>
-														<td>Wind</td>
-														<td>3.39 mph</td>
-													</tr>
-													<tr>
-														<td>Humidity</td>
-														<td>24%</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-auto">
-									<div class="card">
-										<div class="card-body">
-											<p class="card-title fs-5">09/01/2022</p>
-											<table class="table table-borderless">
-												<tbody>
-													<tr>
-														<td>Temp:</td>
-														<td>48 degrees</td>
-													</tr>
-													<tr>
-														<td>Wind</td>
-														<td>3.39 mph</td>
-													</tr>
-													<tr>
-														<td>Humidity</td>
-														<td>24%</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-`;

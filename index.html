@@ -25,26 +25,29 @@
 		<main class="container-fluid">
 			<!-- outmost row -->
 			<div class="row">
-				<!-- CITY SEARCH START-->
+				<!-- 
+					CITY SEARCH START
+				-->
+
 				<div class="col-md-4">
 					<!-- city search box -->
-					<form action="" class="city-search-form">
-						<label for="citySearch"><h2>Search for a City:</h2></label>
-						<input type="text" name="citySearch" id="citySearch" required minlength="2" />
-						<input type="button" id="formBtn" value="Submit" />
-						<p id="empty-search"></p>
-						<div id="searchInstructions">
-							<p class="instructions">Instructions:</p>
-							<ul class="instructions">
-								<li>Search for a city by name (example: San Jose) to return a list.</li>
-								<li>
-									Search for specific city by including its state (full names such as "California" or "Buenos Aires") and/or country with the
-									two-letter code by using commas (example: San Jose, AR)
-								</li>
-							</ul>
-						</div>
-						<!-- Search instructions -->
-					</form>
+					<!-- <form action="" class="city-search-form"> -->
+					<label for="citySearch"><h2>Search for a City:</h2></label>
+					<input type="text" name="citySearch" id="autocomplete" placeholder="Enter a city name" required minlength="2" />
+					<!-- <input type="button" id="formBtn" value="Submit" /> -->
+					<p id="empty-search"></p>
+					<div id="searchInstructions">
+						<p class="instructions">Instructions:</p>
+						<ul class="instructions">
+							<li>Search for a city by name (example: San Jose) to return a list.</li>
+							<li>
+								Search for specific city by including its state (full names such as "California" or "Buenos Aires") and/or country with the
+								two-letter code by using commas (example: San Jose, AR)
+							</li>
+						</ul>
+					</div>
+					<!-- Search instructions -->
+					<!-- </form> -->
 					<!-- city search history -->
 					<div class="search-history" id="searchHistory"></div>
 				</div>
@@ -59,7 +62,7 @@
 						<!-- current weather container -->
 						<article>
 							<div class="container current-weather border border-dark">
-								<div class="row"><h2 id="cityName">Los Angeles</h2></div>
+								<div class="row"><h2 id="currentCityName">Los Angeles</h2></div>
 								<div class="row">
 									<div class="col current-weather-text">
 										<p class="fs-3">Temperature:</p>
@@ -264,11 +267,42 @@
 		integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
 		crossorigin="anonymous"
 	></script> -->
+
+	<!-- Bootstrap -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
 		integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
 		crossorigin="anonymous"
 	></script>
+
+	<!-- Google Maps API -->
+	<script>
+		let autocomplete;
+		function initAutocomplete() {
+			autocomplete = new google.maps.places.Autocomplete(document.getElementById("autocomplete"), {
+				types: ["locality"],
+				// componentRestrictions: { country: ["AU"] },
+				fields: ["name", "formatted_address", "geometry.location"],
+			});
+			autocomplete.addListener("place_changed", onPlaceChanged);
+		}
+		function onPlaceChanged() {
+			var place = autocomplete.getPlace();
+
+			if (!place.geometry) {
+				// User didn't select a prediciton: reset the input field
+				document.getElementById("autocomplete").placeholder = "Enter a place";
+			} else {
+				// Display details about the valid place
+				console.log(place.geometry.location.lat());
+				document.getElementById("currentCityName").innerHTML = place.formatted_address;
+			}
+		}
+	</script>
+
+	<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmI3Q6AABGZ9ZbnD-TbXDEHKNnSlKXF6Q&libraries=places&callback=initAutocomplete"></script>
 	<script src="./js/index.js"></script>
 	<script type="module" src="./js/geocoding.js"></script>
+
+	<!-- Trying this here -->
 </html>
