@@ -36,3 +36,11 @@
 
 .city-search-form {
 }
+
+.returned-cities-list {
+	list-style-type: none;
+}
+
+.returned-cities-list li {
+	margin-bottom: 1em;
+}

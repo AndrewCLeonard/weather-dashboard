@@ -50,20 +50,23 @@
 				</div>
 				<!-- CITY SEARCH END -->
 
-				<!-- div for current weather and forecast -->
-				<div class="col-md-8">
+				<!-- WEATHER REPORT START -->
+				<!-- container div for current weather and forecast -->
+				<!-- (this element is emptied every search) -->
+				<div id="weatherReportContainerEl" class="col-md-8">
 					<!-- current weather data -->
 					<div class="row">
 						<!-- current weather container -->
 						<article>
 							<div class="container current-weather border border-dark">
-								<div class="row"><h2>Los Angeles</h2></div>
+								<div class="row"><h2 id="cityName">Los Angeles</h2></div>
 								<div class="row">
 									<div class="col current-weather-text">
 										<p class="fs-3">Temperature:</p>
 									</div>
 									<div class="col-6">
-										<p class="fs-3">68 degrees</p>
+										<!-- temp id -->
+										<p class="fs-3" id="currentTemp">68 degrees</p>
 									</div>
 								</div>
 								<div class="row">
@@ -71,7 +74,8 @@
 										<p class="fs-3">Wind:</p>
 									</div>
 									<div class="col">
-										<p class="fs-3">5.57 mph</p>
+										<!-- wind id -->
+										<p class="fs-3" id="currentWind">5.57 mph</p>
 									</div>
 								</div>
 								<div class="row">
@@ -79,7 +83,8 @@
 										<p class="fs-3">Humidity:</p>
 									</div>
 									<div class="col current-weather-text">
-										<p class="fs-3">40%</p>
+										<!-- humidity id -->
+										<p class="fs-3" id="currentHumidity">40%</p>
 									</div>
 								</div>
 								<div class="row">
@@ -87,7 +92,8 @@
 										<p class="fs-3">UV Index:</p>
 									</div>
 									<div class="col">
-										<p class="fs-3">12</p>
+										<!-- uv index id -->
+										<p class="fs-3" id="currentUVIndex">12</p>
 									</div>
 								</div>
 							</div>
@@ -221,9 +227,34 @@
 						</div>
 					</div>
 				</div>
+
+				<!-- WEATHER REPORT END -->
 			</div>
 		</main>
 		<ol></ol>
+		<div id="returnedCities" class="returned-cities">
+			<h2 class="choose-city">Choose the City:</h2>
+			<h3>Los Angeles</h3>
+			<form action="" class="returned-cities-form">
+				<ul class="returned-cities-list">
+					<li>
+						<input type="button" id="formBtn" value="California, United States" />
+					</li>
+					<li>
+						<input type="button" id="formBtn" value="California, United States" />
+					</li>
+					<li>
+						<input type="button" id="formBtn" value="California, United States" />
+					</li>
+					<li>
+						<input type="button" id="formBtn" value="California, United States" />
+					</li>
+					<li>
+						<input type="button" id="formBtn" value="California, United States" />
+					</li>
+				</ul>
+			</form>
+		</div>
 	</body>
 	<!-- SCRIPTS -->
 
