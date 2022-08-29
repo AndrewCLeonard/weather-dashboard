@@ -31,53 +31,54 @@ const currentHumidityEl = document.getElementById("currentHumidity");
 const currentUVIndexEl = document.getElementById("currentUVIndex");
 const currentCityName = document.getElementById("currentCityName");
 
-function runGeoCodingAPI(citySearched) {
-	console.log("===== runGeoCodingAPI =====");
-	const apiURL = `https://api.openweathermap.org/geo/1.0/direct?q=${citySearched}&limit=5&appid=${apiKeys.openWeatherKey}`;
-	fetch(apiURL) //
-		.then((response) => {
-			// handle bad responses
-			if (!response.ok) {
-				throw new Error(`HTTP error, status = ${response.status}`);
-				// console.table(response.json());
-			}
-			// handle good responses
-			// empty the node of all children
-			weatherReportContainerEl.replaceChildren();
-			return response.json();
-		})
-		.then((data) => {
-			for (const i of data) {
-				console.log(i.country);
-				console.log(i.lat);
-				const listItemEl = document.createElement("li");
-				const stateCountryNameEl = document.createElement("button");
+// function runGeoCodingAPI(citySearched) {
+// 	console.log("===== runGeoCodingAPI =====");
+// 	const apiURL = `https://api.openweathermap.org/geo/1.0/direct?q=${citySearched}&limit=5&appid=${apiKeys.openWeatherKey}`;
+// 	fetch(apiURL) //
+// 		.then((response) => {
+// 			// handle bad responses
+// 			if (!response.ok) {
+// 				throw new Error(`HTTP error, status = ${response.status}`);
+// 				// console.table(response.json());
+// 			}
+// 			// handle good responses
+// 			// empty the node of all children
+// 			weatherReportContainerEl.replaceChildren();
+// 			return response.json();
+// 		})
+// 		.then((data) => {
+// 			for (const i of data) {
+// 				console.log(i.country);
+// 				console.log(i.lat);
+// 				const listItemEl = document.createElement("li");
+// 				const stateCountryNameEl = document.createElement("button");
 
-				// handle cases where API leaves i.state undefined
-				if (i.state) {
-					stateCountryNameEl.textContent = `${i.name}, ${i.state}, ${i.country}`;
-				} else stateCountryNameEl.textContent = `${i.name}, ${i.country}`;
+// 				// handle cases where API leaves i.state undefined
+// 				if (i.state) {
+// 					stateCountryNameEl.textContent = `${i.name}, ${i.state}, ${i.country}`;
+// 				} else stateCountryNameEl.textContent = `${i.name}, ${i.country}`;
 
-				// add data attributes
-				stateCountryNameEl.setAttribute("data-lat", i.lat);
-				stateCountryNameEl.setAttribute("data-lon", i.lon);
-				stateCountryNameEl.setAttribute("data-state", i.state);
-				stateCountryNameEl.setAttribute("data-country", i.country);
+// 				// add data attributes
+// 				stateCountryNameEl.setAttribute("data-lat", i.lat);
+// 				stateCountryNameEl.setAttribute("data-lon", i.lon);
+// 				stateCountryNameEl.setAttribute("data-state", i.state);
+// 				stateCountryNameEl.setAttribute("data-country", i.country);
 
-				listItemEl.append(stateCountryNameEl);
-				unorderedListEl.appendChild(listItemEl);
-			}
-			weatherReportContainerEl.appendChild(unorderedListEl);
-		})
-		.catch((error) => {
-			const p = document.createElement("p");
-			p.appendChild(document.createTextNode(`Error: ${error.message}`));
-			document.body.insertBefore(p, listItemEl);
-		});
-}
+// 				listItemEl.append(stateCountryNameEl);
+// 				unorderedListEl.appendChild(listItemEl);
+// 			}
+// 			weatherReportContainerEl.appendChild(unorderedListEl);
+// 		})
+// 		.catch((error) => {
+// 			const p = document.createElement("p");
+// 			p.appendChild(document.createTextNode(`Error: ${error.message}`));
+// 			document.body.insertBefore(p, listItemEl);
+// 		});
+// }
 let currentCityNameText;
 
-function callCurrentWeatherData(lat, lon) {
+
+export function callCurrentWeatherData(lat, lon) {
 	console.log("====== callCurrentWeatherData() ======");
 
 	// create string for API call for current weather data: https://openweathermap.org/current#one
@@ -104,7 +105,8 @@ function callCurrentWeatherData(lat, lon) {
 			weatherIcon = value.weather[0].icon;
 			console.table(value.main.temp);
 			currentCityNameText = value.name;
-		});
+		})
+		.catch;
 	currentCityName.innerText = currentCityNameText;
 	currentTempEl.innerText = value.main.temp;
 	currentWindEl.innerText = value.wind.speed;

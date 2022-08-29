@@ -259,9 +259,11 @@
 			</form>
 		</div>
 	</body>
+
 	<!-- SCRIPTS -->
 
 	<!-- Commenting out popper library for now, but leaving it here in case I decide to get fancy. -->
+
 	<!-- <script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
 		integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
@@ -269,6 +271,7 @@
 	></script> -->
 
 	<!-- Bootstrap -->
+
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
 		integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
@@ -276,33 +279,12 @@
 	></script>
 
 	<!-- Google Maps API -->
-	<script>
-		let autocomplete;
-		function initAutocomplete() {
-			autocomplete = new google.maps.places.Autocomplete(document.getElementById("autocomplete"), {
-				types: ["locality"],
-				// componentRestrictions: { country: ["AU"] },
-				fields: ["name", "formatted_address", "geometry.location"],
-			});
-			autocomplete.addListener("place_changed", onPlaceChanged);
-		}
-		function onPlaceChanged() {
-			var place = autocomplete.getPlace();
 
-			if (!place.geometry) {
-				// User didn't select a prediciton: reset the input field
-				document.getElementById("autocomplete").placeholder = "Enter a place";
-			} else {
-				// Display details about the valid place
-				console.log(place.geometry.location.lat());
-				document.getElementById("currentCityName").innerHTML = place.formatted_address;
-			}
-		}
-	</script>
-
-	<script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmI3Q6AABGZ9ZbnD-TbXDEHKNnSlKXF6Q&libraries=places&callback=initAutocomplete"></script>
-	<script src="./js/index.js"></script>
+	<script
+		type="module"
+		async
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmI3Q6AABGZ9ZbnD-TbXDEHKNnSlKXF6Q&libraries=places&callback=initAutocomplete"
+	></script>
 	<script type="module" src="./js/geocoding.js"></script>
-
-	<!-- Trying this here -->
+	<script src="./js/index.js"></script>
 </html>
