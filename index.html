@@ -4,15 +4,30 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>Weather Dashboard</title>
+
+		<!-- favicon -->
+
+		<link
+			rel="icon"
+			href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☔️</text></svg>"
+		/>
+
 		<!-- Bootstrap CSS -->
+
 		<link
 			href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
 			rel="stylesheet"
 			integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
 			crossorigin="anonymous"
 		/>
+
 		<!-- Additional CSS -->
+
 		<link rel="stylesheet" href="./css/style.css" />
+
+		<!-- js -->
+
+		<script type="module" src="./js/index.js"></script>
 	</head>
 	<body>
 		<!-- Header -->
@@ -32,7 +47,7 @@
 				<div class="col-md-4">
 					<!-- city search box -->
 					<!-- <form action="" class="city-search-form"> -->
-					<label for="citySearch"><h2>Search for a City:</h2></label>
+					<label for="citySearch"><h2 id="experiment">Search for a City:</h2></label>
 					<input type="text" name="citySearch" id="autocomplete" placeholder="Enter a city name" required minlength="2" />
 					<!-- <input type="button" id="formBtn" value="Submit" /> -->
 					<p id="empty-search"></p>
@@ -258,33 +273,40 @@
 				</ul>
 			</form>
 		</div>
-	</body>
 
-	<!-- SCRIPTS -->
+		<!-- SCRIPTS -->
 
-	<!-- Commenting out popper library for now, but leaving it here in case I decide to get fancy. -->
+		<!-- Commenting out popper library for now, but leaving it here in case I decide to get fancy. -->
 
-	<!-- <script
+		<!-- <script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
 		integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
 		crossorigin="anonymous"
 	></script> -->
 
-	<!-- Bootstrap -->
+		<!-- Bootstrap -->
 
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
-		integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
-		crossorigin="anonymous"
-	></script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
+			integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
+			crossorigin="anonymous"
+		></script>
 
-	<!-- Google Maps API -->
+		<!-- Google Maps API -->
 
-	<script
-		type="module"
-		async
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmI3Q6AABGZ9ZbnD-TbXDEHKNnSlKXF6Q&libraries=places&callback=initAutocomplete"
-	></script>
-	<script type="module" src="./js/geocoding.js"></script>
-	<script src="./js/index.js"></script>
+		<!-- 
+	https://developers.google.com/maps/documentation/javascript/examples/places-autocomplete
+    
+	The `defer` attribute causes the callback to execute after the full HTML document has been parsed. For non-blocking uses, avoiding race conditions, and consistent behavior across browsers, consider loading using Promises with https://www.npmjs.com/package/@googlemaps/js-api-loader.
+    -->
+
+		<script
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmI3Q6AABGZ9ZbnD-TbXDEHKNnSlKXF6Q&callback=initAutocomplete&libraries=places&v=weekly"
+			defer
+		></script>
+
+		<!-- <script src="./js/geocoding.js"></script> -->
+		<!-- <script type="module" src="./js/keys.mjs"></script> -->
+		<!-- <script type="module" src="./js/sayHi.mjs"></script> -->
+	</body>
 </html>

@@ -38,7 +38,6 @@ Demonstration of ability to use server-side APIs
 
 #### [Place Autocomplete](https://developers.google.com/maps/documentation/javascript/place-autocomplete)
 
-
 ### OpenWeather API
 
 ## Backlog
@@ -52,3 +51,8 @@ Demonstration of ability to use server-side APIs
 -   `<input type="submit">` vs. using a button. I'm not sending it to a server yet, do I change it from button to submit once I'm ready to construct the API requests?
 -   The header's image is responsive, but it changes because of `object-fit` when resized.
 -   Improve the fit of five-day forecast cards
+
+### Low Priority
+
+-   switch to TypeScript
+    -   use `npm i @types/google.maps`
