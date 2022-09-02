@@ -46,15 +46,13 @@ Demonstration of ability to use server-side APIs
 
 -   I'm running code in browser, so I can't use dotenv package. How to hide my API Key in this case?
 -   use callback function [cited here](https://openweathermap.org/api/one-call-3#call) instead of traditional fetch request?
-- Why doesn't the span inside the `h2` work for inserting the icon?
 
 ### Medium Priority
 
--   `<input type="submit">` vs. using a button. I'm not sending it to a server yet, do I change it from button to submit once I'm ready to construct the API requests?
+-   add toggle between metric and imperial units
 -   The header's image is responsive, but it changes because of `object-fit` when resized.
 -   Improve the fit of five-day forecast cards
 
 ### Low Priority
-
 -   switch to TypeScript
     -   use `npm i @types/google.maps`

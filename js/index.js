@@ -7,7 +7,8 @@ const textSearchEl = document.getElementById("autocomplete");
 const formBtnEl = document.getElementById("formBtn");
 
 // text input for "search for a city"
-const currentCityName = document.getElementById("currentCityName");
+const currentCityNameEl = document.getElementById("currentCityName");
+
 /**
  * GOOGLE MAPS AUTOCOMPLETE
  */
@@ -40,15 +41,16 @@ function onPlaceChanged() {
 	}
 }
 
-function getTextValue(e) {
-	e.preventDefault;
-	const citySearched = textSearchEl.value;
-	// handle search response or blank queries
-	citySearched
-		? getCurrentWeatherData(latitude, longitude)
-		: // needs to be written
-		  alertMessage();
-}
+// DELETE?
+// function getTextValue(e) {
+// 	e.preventDefault;
+// 	const citySearched = textSearchEl.value;
+// 	// handle search response or blank queries
+// 	citySearched
+// 		? getCurrentWeatherData(latitude, longitude)
+// 		: // needs to be written
+// 		  alertMessage();
+// }
 
 // DOM Elements
 const unorderedListEl = document.createElement("ul");
@@ -62,12 +64,22 @@ const currentTempEl = document.getElementById("currentTemp");
 const currentWindEl = document.getElementById("currentWind");
 const currentHumidityEl = document.getElementById("currentHumidity");
 const currentUVIndexEl = document.getElementById("currentUVIndex");
-const currentWeatherIconEl = document.getElementById("currentWeatherIcon");
+const currentWeatherIconEl = document.querySelector("#currentWeatherIcon");
+
+/**
+ * GET CURRENT WEATHER
+ */
+
+/**
+ * @param {string} city  - city name returned by Google Place Autocomplete
+ * @param {number} latitude latitude returned by Google
+ * @param {number} longitude longitude returned by Google
+ */
 function getCurrentWeatherData(city, latitude, longitude) {
 	console.log("====== getCurrentWeatherData() ======");
 
 	// create string for API call for current weather data: https://openweathermap.org/current#one
-	const currentWeatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&exclude=minutely,hourly,daily&appid=${apiKeys.openWeatherKey}`;
+	const currentWeatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&exclude=minutely,hourly,daily&appid=${apiKeys.openWeatherKey}&units=imperial`;
 
 	fetch(currentWeatherApiUrl)
 		.then((response) => {
@@ -79,20 +91,21 @@ function getCurrentWeatherData(city, latitude, longitude) {
 		})
 		// handle good responses
 		.then((value) => {
-			console.log(value.name);
-			console.table(value.weather);
-			console.log(value.weather);
-			currentCityName.innerText = city;
 			const currentWeatherIcon = value.weather[0].icon;
-			currentWeatherIconEl.innerHTML = `http://openweathermap.org/img/wn/${currentWeatherIcon}@2x.png`;
-			console.log(currentWeatherIcon);
-			console.log(currentWeatherIconEl.innerHTML);
-			console.log(currentWeatherIconEl);
-			currentTempEl.innerText = value.main.temp;
-			currentWindEl.innerText = value.wind.speed;
+			currentCityNameEl.innerHTML = `${city} <span id="currentWeatherIcon"><img src="http://openweathermap.org/img/wn/${currentWeatherIcon}@2x.png" alt=""></span>`;
+
+			currentTempEl.innerText = `${value.main.temp} ℉`;
+			currentWindEl.innerText = `${value.wind.speed} mph`;
 			currentHumidityEl.innerText = value.main.humidity;
 			currentUVIndexEl.innerText = "???";
 		}).catch;
+}
+
+function getForecast(city, latitude, longitude) {
+	console.log("====== getForecast() ======");
+
+	// creaste string for API call
+	const forecastApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKeys.openWeatherKey}&units=imperial`;
 }
 
 /**
@@ -100,8 +113,9 @@ function getCurrentWeatherData(city, latitude, longitude) {
  */
 function alertMessage() {}
 
+// DELETE?
 // event listener for "search for city" button
-formBtnEl.addEventListener("click", getTextValue, false);
+// formBtnEl.addEventListener("click", getTextValue, false);
 
 window.initAutocomplete = initAutocomplete;
 export {};
