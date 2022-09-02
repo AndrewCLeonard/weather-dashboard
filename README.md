@@ -45,6 +45,8 @@ Demonstration of ability to use server-side APIs
 ### High Priority
 
 -   I'm running code in browser, so I can't use dotenv package. How to hide my API Key in this case?
+-   use callback function [cited here](https://openweathermap.org/api/one-call-3#call) instead of traditional fetch request?
+- Why doesn't the span inside the `h2` work for inserting the icon?
 
 ### Medium Priority
 
