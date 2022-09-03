@@ -3,7 +3,10 @@ keys.mjs
 googleStyle.css
 googleCode.html
 googleCode2.html
-
+test.html
+test.js
+testForecastData.js
+testWeatherData.json
 # Logs
 logs
 *.log
