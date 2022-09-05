@@ -1,0 +1,46 @@
+{
+	"coord": {
+		"lon": -110.7624,
+		"lat": 43.4799
+	},
+	"weather": [
+		{
+			"id": 800,
+			"main": "Clear",
+			"description": "clear sky",
+			"icon": "01n"
+		}
+	],
+	"base": "stations",
+	"main": {
+		"temp": 287.95,
+		"feels_like": 286.11,
+		"temp_min": 285.27,
+		"temp_max": 287.95,
+		"pressure": 1017,
+		"humidity": 24,
+		"sea_level": 1017,
+		"grnd_level": 815
+	},
+	"visibility": 10000,
+	"wind": {
+		"speed": 1.58,
+		"deg": 168,
+		"gust": 1.54
+	},
+	"clouds": {
+		"all": 0
+	},
+	"dt": 1662094791,
+	"sys": {
+		"type": 1,
+		"id": 2931,
+		"country": "US",
+		"sunrise": 1662036432,
+		"sunset": 1662083957
+	},
+	"timezone": -21600,
+	"id": 5828648,
+	"name": "Jackson",
+	"cod": 200
+}
