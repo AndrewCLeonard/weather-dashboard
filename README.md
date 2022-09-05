@@ -45,7 +45,10 @@ Demonstration of ability to use server-side APIs
 ### High Priority
 
 -   I'm running code in browser, so I can't use dotenv package. How to hide my API Key in this case?
+    - Use Express server that can accept requests
+    - Where will I be deploying? env variables can be added to Heroku, Netlify, etc. 
 -   use callback function [cited here](https://openweathermap.org/api/one-call-3#call) instead of traditional fetch request?
+- write tests
 
 ### Medium Priority
 
@@ -56,3 +59,4 @@ Demonstration of ability to use server-side APIs
 ### Low Priority
 -   switch to TypeScript
     -   use `npm i @types/google.maps`
+- difference between declarative vs. imperative code

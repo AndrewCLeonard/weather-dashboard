@@ -9,6 +9,13 @@ createUnorderedListEl.setAttribute("id", "unorderedListEl");
 bodyEl.appendChild(createUnorderedListEl);
 let unorderedListEl = document.getElementById("unorderedListEl");
 
+/**
+ * </hr>
+ */
+
+const horizontalRule = document.createElement("hr");
+document.body.insertBefore(horizontalRule, unorderedListEl);
+
 for (let i = 0; i < json.list.length; i++) {
 	let temp = json.list[i].main.temp;
 	// Why does it not create new nodes if `listItemEl` is declared globally?
@@ -16,8 +23,6 @@ for (let i = 0; i < json.list.length; i++) {
 	listItemEl.innerText = temp;
 	unorderedListEl.appendChild(listItemEl);
 }
-const horizontalRule = document.createElement("hr");
-document.body.appendChild(horizontalRule);
 
 // console.log(json.list[0].dt_txt);
 // console.log(json.list[1].dt_txt);
@@ -34,6 +39,21 @@ for (let i = 0; i < json.list.length; i++) {
 		dateTextArray.push(dateText);
 	}
 }
+
+/**
+ * for...of version
+ */
+
+for (const date of json.list) {
+}
+
+/**
+ * for...each version
+ */
+
+json.list.forEach((date) => {
+	console.table(date.dt_txt);
+});
 
 const testDate = "2022-09-04";
 
