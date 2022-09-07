@@ -3,15 +3,15 @@ import formattedForcastData from "./sampleForecastObject.js";
 
 // console.log(formattedForcastData["2022-09-03"].temp_min);
 
-let date = new Date(json.list[0].dt * 1000);
-console.log(date);
-console.log(date.getDay());
-console.log(date.getMonth());
-console.log(date.getDate());
-const d = new Date(date);
-console.log(d);
+// console.log(json.list.length);
 
-console.log(Date());
+let date = new Date(json.list[0].dt * 1000);
+// console.log(date);
+// console.log(date.getMonth() + 1);
+// console.log(date.getDate());
+// console.log(date.getFullYear());
+// console.log(Date());
+const d = new Date(date);
 
 const bodyEl = document.getElementById("bodyEl");
 
@@ -27,7 +27,7 @@ let unorderedListEl = document.getElementById("unorderedListEl");
  */
 
 const horizontalRule = document.createElement("hr");
-document.body.insertBefore(horizontalRule, unorderedListEl);
+bodyEl.insertBefore(horizontalRule, unorderedListEl);
 
 for (let i = 0; i < json.list.length; i++) {
 	let temp = json.list[i].main.temp;
@@ -83,13 +83,35 @@ const reformattedJson = [];
 // set dateText in original fetch request for baseline
 
 // format dateTextArray to "mm/dd/yyyy"
+const dateObject = document.createElement("div");
+dateObject.setAttribute("id", "dates");
+
+const dateUl = document.createElement("ul");
+
+const options = {
+	// weekday: "short",
+	year: "numeric",
+	month: "numeric",
+	day: "numeric",
+};
+
 json.list.map((date) => {
-	let dateText = date.dt_txt.slice(0, 10);
-	if (reformattedJson.indexOf(dateText) === -1) {
-		reformattedJson.push({ [dateText]: date.main.temp_min });
+	let listItemEl = document.createElement("li");
+	let dateItem = new Date(date.dt * 1000);
+
+	let formattedDate = dateItem.toLocaleString("en-US", options);
+	if (reformattedJson.indexOf(formattedDate) === -1) {
+		listItemEl.innerText = formattedDate;
+		reformattedJson.push(formattedDate);
+		dateUl.appendChild(listItemEl);
 	}
-	Math.min;
 });
+// console.log(reformattedJson);
+
+for (const date of reformattedJson) {
+}
+
+bodyEl.insertBefore(dateUl, horizontalRule);
 
 // console.table(reformattedJson);
 
@@ -106,3 +128,28 @@ function dateFormatConversion(date) {
 	const day = date.slice(8, 10);
 	return `${month}/${day}/${year}`;
 }
+
+/**
+ * EXPERIMENTS
+ */
+
+const testDate = new Date(json.list[0].dt * 1000);
+console.log(testDate.toLocaleString("en-US", options));
+
+let testArray = [];
+
+for (let i = 0; i < json.list.length; i++) {
+	let date = new Date(json.list[i].dt * 1000);
+	date = date.toLocaleDateString("en-US", options);
+	let count = 0;
+
+	if (testArray.indexOf(date) === -1) {
+		testArray.push(date);
+	}
+}
+console.log(testArray);
+
+const dateProperties = Object.getOwnPropertyNames(json.list[0].main.temp_min);
+
+console.log(date.toLocaleString("en-US", options));
+console.log(json.list[0].main.temp_min);
