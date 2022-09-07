@@ -134,22 +134,42 @@ function dateFormatConversion(date) {
  */
 
 const testDate = new Date(json.list[0].dt * 1000);
-console.log(testDate.toLocaleString("en-US", options));
+// console.log(testDate.toLocaleString("en-US", options));
 
 let testArray = [];
 
 for (let i = 0; i < json.list.length; i++) {
 	let date = new Date(json.list[i].dt * 1000);
 	date = date.toLocaleDateString("en-US", options);
-	let count = 0;
-
 	if (testArray.indexOf(date) === -1) {
 		testArray.push(date);
 	}
 }
-console.log(testArray);
+
+const formattedForecastObject = {};
+
+let globalMinTemp;
+
+testArray.forEach((day) => {
+	let lowTempArray = [];
+	let lowestTemp;
+	console.log(`===============${day}===============`);
+	for (const forecastObject of json.list) {
+		let minTemp = forecastObject.main.temp_min;
+		let forecastDate = new Date(forecastObject.dt * 1000);
+		forecastDate = forecastDate.toLocaleDateString("en-US", options);
+		if (day === forecastDate) {
+			lowTempArray.push(minTemp);
+		}
+		lowestTemp = Math.min(...lowTempArray);
+	}
+	console.log(lowestTemp);
+	return lowestTemp;
+});
+
+// console.log(formattedForecastObject);
 
 const dateProperties = Object.getOwnPropertyNames(json.list[0].main.temp_min);
 
-console.log(date.toLocaleString("en-US", options));
-console.log(json.list[0].main.temp_min);
+// console.log(date.toLocaleString("en-US", options));
+// console.log(json.list[0].main.temp_min);
