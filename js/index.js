@@ -63,7 +63,6 @@ let weatherIcon, countryName;
 const currentTempEl = document.getElementById("currentTemp");
 const currentWindEl = document.getElementById("currentWind");
 const currentHumidityEl = document.getElementById("currentHumidity");
-const currentUVIndexEl = document.getElementById("currentUVIndex");
 const currentWeatherIconEl = document.querySelector("#currentWeatherIcon");
 
 /**
@@ -97,7 +96,6 @@ function getCurrentWeatherData(city, latitude, longitude) {
 			currentTempEl.innerText = `${value.main.temp} ℉`;
 			currentWindEl.innerText = `${value.wind.speed} mph`;
 			currentHumidityEl.innerText = value.main.humidity;
-			currentUVIndexEl.innerText = "???";
 		}).catch;
 }
 
