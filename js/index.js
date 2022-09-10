@@ -1,4 +1,4 @@
-import { apiKeys } from "./keys.mjs";
+const OPEN_WEATHER_API_KEY = process.env.OPEN_WEATHER_API_KEY;
 
 const textSearchEl = document.getElementById("autocomplete");
 
@@ -85,7 +85,7 @@ function getCurrentWeatherData(city, latitude, longitude) {
 	console.log("====== getCurrentWeatherData() ======");
 
 	// create string for API call for current weather data: https://openweathermap.org/current#one
-	const currentWeatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&exclude=minutely,hourly,daily&appid=${apiKeys.openWeatherKey}&units=imperial`;
+	const currentWeatherApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&exclude=minutely,hourly,daily&appid=${OPEN_WEATHER_API_KEY}&units=imperial`;
 
 	fetch(currentWeatherApiUrl)
 		.then((response) => {
@@ -132,7 +132,7 @@ function getForecast(latitude, longitude) {
 	}
 
 	// create string for API call
-	const forecastApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKeys.openWeatherKey}&units=imperial`;
+	const forecastApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${OPEN_WEATHER_API_KEY}&units=imperial`;
 
 	fetch(forecastApiUrl)
 		.then((response) => {
