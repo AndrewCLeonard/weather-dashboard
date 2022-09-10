@@ -1,7 +1,7 @@
-import json from "./testForecastData.js";
-import formattedForcastData from "./sampleForecastObject.js";
+import json from "../js/testForecastData.js";
+import formattedForcastData from "../js/sampleForecastObject.js";
 import markers from "./mapsMarkers.js";
-import names from "./nameList.js";
+import names from "../js/nameList.js";
 
 /**
  * OPTIONS FOR CONVERTING UTC TO "en-US" DATE FORMAT
@@ -26,13 +26,16 @@ for (let i = 0; i < json.list.length; i++) {
 	}
 }
 /**
- * forEach() ON `dateArray`: find the dates in UTC format returned in the forecast API call: json.list.dt
- * for...of inside the forEach() organinizes data into arrays based on given dates, then finds min/max values
+ * forEach() ON `dateArray`:
+ * - find all the dates in UTC format returned in the forecast API call: json.list.dt
+ *
+ * for...of inside the forEach():
+ * - organinizes data into arrays based on given dates, then finds min/max values
  */
-let dailyHisAndLows;
+let dailyHighsAndLows;
 let forecastArray = [];
-
 const forecastCardsContainerEl = document.getElementById("forecastCardsContainerEl");
+
 dateArray.forEach((day) => {
 	// lowest temperature
 	let lowTempArray = [];
@@ -80,7 +83,7 @@ dateArray.forEach((day) => {
 		highestHumidity = Math.max(...humidityArray);
 		lowestWind = Math.min(...windArray);
 		highestWind = Math.max(...windArray);
-		dailyHisAndLows = {
+		dailyHighsAndLows = {
 			forecastDate: day,
 			lowestTemp: lowestTemp,
 			highestTemp: highestTemp,
@@ -90,7 +93,7 @@ dateArray.forEach((day) => {
 			highestWind: highestWind,
 		};
 	}
-	forecastArray.push(dailyHisAndLows);
+	forecastArray.push(dailyHighsAndLows);
 });
 
 console.table(forecastArray);
