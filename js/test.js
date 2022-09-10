@@ -13,23 +13,8 @@ let date = new Date(json.list[0].dt * 1000);
 // console.log(date.getDate());
 // console.log(date.getFullYear());
 // console.log(Date());
-const d = new Date(date);
 
 const bodyEl = document.getElementById("bodyEl");
-
-const createUnorderedListEl = document.createElement("ul");
-
-// set/append/get id attribute for `<ul id="unorderedListEl">`
-createUnorderedListEl.setAttribute("id", "unorderedListEl");
-bodyEl.appendChild(createUnorderedListEl);
-let unorderedListEl = document.getElementById("unorderedListEl");
-
-/**
- * </hr>
- */
-
-const horizontalRule = document.createElement("hr");
-bodyEl.insertBefore(horizontalRule, unorderedListEl);
 
 // for (let i = 0; i < json.list.length; i++) {
 // 	let temp = json.list[i].main.temp;
@@ -117,10 +102,12 @@ for (let i = 0; i < json.list.length; i++) {
 	}
 }
 /**
- * forEach() on dateArray: find the dates in UTC format returned in the forecast API call: json.list.dt
+ * forEach() ON `dateArray`: find the dates in UTC format returned in the forecast API call: json.list.dt
  * for...of inside the forEach() organinizes data into arrays based on given dates, then finds min/max values
  */
+let dailyHisAndLows;
 let forecastArray = [];
+
 dateArray.forEach((day) => {
 	// lowest temperature
 	let lowTempArray = [];
@@ -141,6 +128,9 @@ dateArray.forEach((day) => {
 	let highestWind;
 
 	console.log(`===============${day}===============`);
+	/**
+	 * INNER FOR...OF LOOP
+	 */
 	// match json.list.dt values to the forecast data from those specific dates
 	for (const forecastObject of json.list) {
 		// find the corresponding array elements
@@ -165,21 +155,19 @@ dateArray.forEach((day) => {
 		highestHumidity = Math.max(...humidityArray);
 		lowestWind = Math.min(...windArray);
 		highestWind = Math.max(...windArray);
-		forecastArray = [
-			{
-				lowestTemp: lowestTemp,
-				highestTemp: highestTemp,
-				lowestHumidity: lowestHumidity,
-				highestHumidity: highestHumidity,
-				lowestWind: lowestWind,
-				highestWind: highestWind,
-			},
-		];
+		dailyHisAndLows = {
+			forecastDate: day,
+			lowestTemp: lowestTemp,
+			highestTemp: highestTemp,
+			lowestHumidity: lowestHumidity,
+			highestHumidity: highestHumidity,
+			lowestWind: lowestWind,
+			highestWind: highestWind,
+		};
 	}
-	return lowestTemp;
+	forecastArray.push(dailyHisAndLows);
 });
 
-console.table(names);
 console.table(forecastArray);
 
 /**
@@ -191,9 +179,26 @@ const h5El = document.createElement("h5");
 const h6El = document.createElement("h6");
 const paraEl = document.createElement("p");
 
-forecastArray.forEach((day) => {
-	console.log(day);
+const cardSectionEl = document.getElementById("cards");
+
+forecastArray.forEach((forecastCard, i) => {
+	cardDivEl.classList.add("card");
+	cardDivEl.setAttribute("width", "18rem");
+	cardBodyEl.classList.add("card-body");
+	h5El.classList.add("card-title");
+	h5El.innerText = `${forecastCard.forecastDate} ${i}`;
+	h6El.classList.add("card-subtitle", "mb-2", "text-muted");
+
+	// append elements together
+	cardBodyEl.appendChild(h5El);
+	cardDivEl.appendChild(cardBodyEl);
+	cardSectionEl.appendChild(cardDivEl);
 });
+
+const testString = "test string";
+
+paraEl.innerText = testString;
+cardDivEl.appendChild(paraEl);
 
 /** 
 <div class="card" style="width: 18rem;">
