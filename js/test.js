@@ -3,50 +3,6 @@ import formattedForcastData from "./sampleForecastObject.js";
 import markers from "./mapsMarkers.js";
 import names from "./nameList.js";
 
-// console.log(formattedForcastData["2022-09-03"].temp_min);
-
-// console.log(json.list.length);
-
-let date = new Date(json.list[0].dt * 1000);
-// console.log(date);
-// console.log(date.getMonth() + 1);
-// console.log(date.getDate());
-// console.log(date.getFullYear());
-// console.log(Date());
-
-const bodyEl = document.getElementById("bodyEl");
-
-// for (let i = 0; i < json.list.length; i++) {
-// 	let temp = json.list[i].main.temp;
-// 	// Why does it not create new nodes if `listItemEl` is declared globally?
-// 	let listItemEl = document.createElement("li");
-// 	listItemEl.innerText = temp;
-// 	unorderedListEl.appendChild(listItemEl);
-// }
-
-// console.log(json.list[0].dt_txt);
-// console.log(json.list[1].dt_txt);
-
-// create array from all unique "dt_txt" values (date and time)
-// cons: need to split on space to find date, more straightforward to use UTC code?
-// for (let i = 0; i < json.list.length; i++) {
-// 	// extract dates only, removing the times
-// 	let dateText = json.list[i].dt_txt.slice(0, 10);
-// 	// convert dates into proper format
-// 	dateText = dateFormatConversion(dateText);
-// 	if (dateTextArray.indexOf(dateText) === -1) {
-// 		dateTextArray.push(dateText);
-// 	}
-// }
-
-// set dateText in original fetch request for baseline
-
-// format dateTextArray to "mm/dd/yyyy"
-// const dateObject = document.createElement("div");
-// dateObject.setAttribute("id", "dates");
-
-// const dateUl = document.createElement("ul");
-
 /**
  * OPTIONS FOR CONVERTING UTC TO "en-US" DATE FORMAT
  */
@@ -56,38 +12,6 @@ const options = {
 	month: "numeric",
 	day: "numeric",
 };
-
-// json.list.map((date) => {
-// 	let listItemEl = document.createElement("li");
-// 	let dateItem = new Date(date.dt * 1000);
-
-// 	let formattedDate = dateItem.toLocaleString("en-US", options);
-// 	if (reformattedJson.indexOf(formattedDate) === -1) {
-// 		listItemEl.innerText = formattedDate;
-// 		reformattedJson.push(formattedDate);
-// 		dateUl.appendChild(listItemEl);
-// 	}
-// });
-// console.log(reformattedJson);
-
-// bodyEl.insertBefore(dateUl, horizontalRule);
-
-// console.table(reformattedJson);
-
-// dateTextArray.forEach((date) => {
-// 	json.list.forEach((minTemp) => {
-// 		let dateText = minTemp.dt_txt.slice(0, 10);
-// 		// dateText === date ? console.log(true) : console.log(false);
-// 	});
-// });
-
-// function dateFormatConversion(date) {
-// 	const year = date.slice(0, 4);
-// 	const month = date.slice(5, 7);
-// 	const day = date.slice(8, 10);
-// 	return `${month}/${day}/${year}`;
-// }
-
 /**
  * FIND DATES OF FORECAST DATA
  */
@@ -108,6 +32,7 @@ for (let i = 0; i < json.list.length; i++) {
 let dailyHisAndLows;
 let forecastArray = [];
 
+const forecastCardsContainerEl = document.getElementById("forecastCardsContainerEl");
 dateArray.forEach((day) => {
 	// lowest temperature
 	let lowTempArray = [];
@@ -127,7 +52,7 @@ dateArray.forEach((day) => {
 	let lowestWind;
 	let highestWind;
 
-	console.log(`===============${day}===============`);
+	// console.log(`===============${day}===============`);
 	/**
 	 * INNER FOR...OF LOOP
 	 */
@@ -170,37 +95,89 @@ dateArray.forEach((day) => {
 
 console.table(forecastArray);
 
-/**
- * CREATING CARDS
- */
-const cardDivEl = document.createElement("div");
-const cardBodyEl = document.createElement("div");
-const h5El = document.createElement("h5");
-const h6El = document.createElement("h6");
-const paraEl = document.createElement("p");
+forecastArray.forEach((date) => {
+	console.log(date.forecastDate);
+	const cardTemplateLiteral = `
+			<div class="card">
+				<div class="card-body">
+					<p class="card-title fs-5">${date.forecastDate}</p>
+					<table class="table table-borderless">
+						<tbody>
+							<tr>
+								<td>Temp:</td>
+								<td>${date.lowestTemp} ℉ / ${date.highestTemp} ℉</td>
+							</tr>
+							<tr>
+								<td>Wind</td>
+								<td>${date.lowestWind} mph / ${date.highestWind} mph</td>
+							</tr>
+							<tr>
+								<td>Humidity</td>
+								<td>${date.lowestHumidity}% / ${date.highestHumidity}%</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		`;
 
-const cardSectionEl = document.getElementById("cards");
+	const colLgAuto = document.createElement("div");
+	colLgAuto.classList.add("col-lg-auto");
 
-forecastArray.forEach((forecastCard, i) => {
-	cardDivEl.classList.add("card");
-	cardDivEl.setAttribute("width", "18rem");
-	cardBodyEl.classList.add("card-body");
-	h5El.classList.add("card-title");
-	h5El.innerText = `${forecastCard.forecastDate} ${i}`;
-	h6El.classList.add("card-subtitle", "mb-2", "text-muted");
+	colLgAuto.innerHTML = cardTemplateLiteral;
 
-	// append elements together
-	cardBodyEl.appendChild(h5El);
-	cardDivEl.appendChild(cardBodyEl);
-	cardSectionEl.appendChild(cardDivEl);
+	forecastCardsContainerEl.appendChild(colLgAuto);
 });
 
-const testString = "test string";
+/**
+ * CREATING CARDS WITH TEMPLATE LITERAL
+ */
 
-paraEl.innerText = testString;
-cardDivEl.appendChild(paraEl);
+/**
+ * CREATING CARDS with APPEND CHILD
+ */
+
+// forecastArray.forEach((forecastCard, i) => {
+// 	// card elements (need to be declared locally so they can be reassigned each iteration)
+// 	const containerEl = document.createElement("div");
+// 	containerEl.classList.add("container");
+
+// 	const rowEl = document.createElement("div").classList.add("row");
+// 	rowEl.classList.add("row");
+
+// 	const colLgAuto = document.createElement("div").classList.add("col-lg-auto");
+// 	colLgAuto.classList.add("col-lg-auto");
+
+// 	const cardDivEl = document.createElement("div");
+// 	cardDivEl.classList.add("card");
+
+// 	const cardBodyEl = document.createElement("div");
+// 	cardBodyEl.classList.add("card-body");
+
+// 	const h5El = document.createElement("h5");
+// 	h5El.classList.add("card-title");
+
+// 	const h6El = document.createElement("h6");
+// 	h6El.classList.add("card-subtitle", "mb-2", "text-muted");
+
+// 	const paraEl = document.createElement("p");
+
+// 	const cardSectionEl = document.getElementById("cards");
+
+// 	cardDivEl.setAttribute("width", "18rem");
+// 	h5El.innerText = `${forecastCard.forecastDate} ${i}`;
+
+// 	// append elements together
+// 	cardBodyEl.appendChild(h5El);
+// 	cardDivEl.appendChild(cardBodyEl);
+// 	cardSectionEl.appendChild(cardDivEl);
+// 	console.log(forecastCard.forecastDate);
+// });
 
 /** 
+ * sample card layouts:
+ * 
+//  * basic card
 <div class="card" style="width: 18rem;">
   <div class="card-body">
     <h5 class="card-title">Card title</h5>
@@ -211,3 +188,32 @@ cardDivEl.appendChild(paraEl);
   </div>
 </div>
 */
+
+// MY CARD LAYOUT
+// const cardTemplateLiteral = `
+// <div class="container">
+// 	<div class="row">
+// 		<div class="col-lg-auto">
+// 			<div class="card">
+// 				<div class="card-body">
+// 					<p class="card-title fs-5">09/01/2022</p>
+// 					<table class="table table-borderless">
+// 						<tbody>
+// 							<tr>
+// 								<td>Temp:</td>
+// 								<td>48 degrees</td>
+// 							</tr>
+// 							<tr>
+// 								<td>Wind</td>
+// 								<td>3.39 mph</td>
+// 							</tr>
+// 							<tr>
+// 								<td>Humidity</td>
+// 								<td>24%</td>
+// 							</tr>
+// 						</tbody>
+// 					</table>
+// 				</div>
+// 			</div>
+// 		</div>
+// `;

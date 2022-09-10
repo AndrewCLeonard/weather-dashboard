@@ -104,6 +104,28 @@ function getForecast(city, latitude, longitude) {
 
 	// creaste string for API call
 	const forecastApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKeys.openWeatherKey}&units=imperial`;
+
+	fetch(forecastApiUrl)
+		.then((response) => {
+			// handle bad responses
+			if (!response.ok) {
+				throw new Error(`HTTP error, status = ${response.status}`);
+			}
+			return response.json;
+		})
+		// handle good responses
+		.then((value) => {
+			let dateArray = [];
+
+			for (let i = 0; i < json.list.length; i++) {
+				let date = new Date(json.list[i].dt * 1000);
+				date = date.toLocaleDateString("en-US", options);
+				if (dateArray.indexOf(date) === -1) {
+					dateArray.push(date);
+				}
+			}
+			console.log(dateArray);
+		});
 }
 
 /**
